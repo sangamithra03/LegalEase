@@ -9,7 +9,8 @@ load_dotenv(BASE_DIR / ".env")
 
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-2.5-flash")
-API_URL = os.getenv("API_URL", "http://localhost:8000")
+API_URL = os.getenv("API_URL", "http://localhost:8001")
+GITHUB_URL = os.getenv("GITHUB_URL", "https://github.com")
 DATABASE_URL = os.getenv("DATABASE_URL", f"sqlite:///{(BASE_DIR / 'legalease.db').as_posix()}")
 
 LOGO_PATH = BASE_DIR / "Image" / "Logo.png"

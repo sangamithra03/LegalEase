@@ -1,44 +1,97 @@
-# LegalEase - AI Legal Document Generator
+# LegalEase-AI
 
-Streamlit (frontend) + FastAPI (backend) + Gemini (AI) + SQLite (database).
+LegalEase is an AI-powered legal document generator built with Streamlit, FastAPI, Gemini AI, and SQLite.
+
+It helps users quickly draft professional legal documents such as agreements, contracts, and NDAs using simple form inputs and AI-generated content.
+
+## Overview
+
+- Streamlit (frontend)
+- FastAPI (backend)
+- Gemini AI (document generation)
+- SQLite (saved document storage)
+- DOCX / TXT / PDF export support
 
 ## 1. Create the environment
+
 Windows (PowerShell):
-    python -m venv venv
-    venv\Scripts\activate
+
+```powershell
+python -m venv venv
+venv\Scripts\activate
+```
 
 macOS / Linux:
-    python3 -m venv venv
-    source venv/bin/activate
+
+```bash
+python3 -m venv venv
+source venv/bin/activate
+```
 
 ## 2. Install dependencies
-    pip install -r requirements.txt
+
+```bash
+pip install -r requirements.txt
+```
 
 ## 3. Configure the API key
-    copy .env.example .env      (Windows)   |   cp .env.example .env   (macOS/Linux)
-Edit `.env` and set GEMINI_API_KEY (get one at https://aistudio.google.com/apikey).
 
-## 4. (Optional) generate placeholder logos
-    python create_logo.py
+```bash
+copy .env.example .env
+```
 
-## 5. Run
-Terminal 1:  uvicorn legalEaseAPI.main:app --reload
-Terminal 2:  streamlit run frontend/app.py
-(or just `./run.sh` on macOS/Linux, `run.bat` on Windows)
+Then edit `.env` and set your Gemini API key:
 
-- API docs:  http://localhost:8000/docs
-- App:       http://localhost:8501
+```env
+GEMINI_API_KEY=your_api_key_here
+```
 
-The SQLite file `legalease.db` is created automatically on first start.
+You can get one at: https://aistudio.google.com/apikey
 
-## API
-POST /generate            create + save a document
-GET  /documents           list saved documents
-GET  /documents/{id}      fetch one
-PUT  /documents/{id}      update edited content
-DELETE /documents/{id}    delete
+## 4. Run the app
 
-## Deployment
-Backend (Render/Railway/Fly.io):  uvicorn legalEaseAPI.main:app --host 0.0.0.0 --port $PORT
-Frontend (Streamlit Community Cloud): set API_URL to the deployed backend URL.
-On hosts with ephemeral disks, set DATABASE_URL to a hosted Postgres (and `pip install psycopg2-binary`).
+Terminal 1:
+
+```bash
+uvicorn legalEaseAPI.main:app --reload
+```
+
+Terminal 2:
+
+```bash
+streamlit run frontend/app.py
+```
+
+Or use the project scripts:
+
+- Windows: `run.bat`
+- macOS/Linux: `run.sh`
+
+## 5. Access the app
+
+- API docs: http://localhost:8000/docs
+- App UI: http://localhost:8501
+
+The SQLite database file `legalease.db` is created automatically on first run.
+
+## API Endpoints
+
+- `POST /generate` — create and save a document
+- `GET /documents` — list saved documents
+- `GET /documents/{id}` — fetch one document
+- `PUT /documents/{id}` — update edited content
+- `DELETE /documents/{id}` — delete a document
+
+## Deployment Notes
+
+- Backend: `uvicorn legalEaseAPI.main:app --host 0.0.0.0 --port $PORT`
+- Frontend: set `API_URL` to the deployed backend URL
+- For temporary hosting environments, configure `DATABASE_URL` with a hosted PostgreSQL database
+
+## Optional
+
+Generate placeholder logos:
+
+```bash
+python create_logo.py
+```

@@ -8,7 +8,7 @@ import requests
 import streamlit as st
 
 from ai_core.generator import format_docx, format_html_preview, format_pdf, sanitize_text
-from config import API_URL, LOGO_PATH
+from config import API_URL, GITHUB_URL, LOGO_PATH
 
 st.set_page_config(page_title="LegalEase", layout="centered")
 
@@ -36,6 +36,13 @@ def load_document(doc_id: int):
 
 # ---------------------------------------------------------------- sidebar
 with st.sidebar:
+    if st.button("➕ Add Document", use_container_width=True):
+        st.session_state.generated_text = ""
+        st.session_state.doc_id = None
+        st.session_state.show_edit = False
+        st.rerun()
+
+    st.markdown("---")
     st.subheader("Saved documents")
     try:
         docs = api("GET", "/documents").json()
@@ -55,6 +62,9 @@ with st.sidebar:
                 st.rerun()
     except requests.RequestException:
         st.warning("Backend not reachable.")
+
+    st.markdown("---")
+    st.link_button("GitHub", GITHUB_URL, use_container_width=True)
 
 # ---------------------------------------------------------------- header
 _, mid, _ = st.columns([1, 2, 1])
